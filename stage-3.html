@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The observation gallery · Aster Facility</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="answers.js"></script>
+  <script defer src="scenes.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body data-screen="3">
+  <header><div>
+    <div class="brand"><i aria-hidden="true"></i> ASTER RESEARCH FACILITY</div>
+    <div class="meta"><span id="team"></span><span class="progress" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="current"></i><i class=""></i><i class=""></i></span></div>
+  </div></header>
+  <main class="layout">
+    <div class="mast"><p class="eyebrow">Barrier 3 of 5</p><h1>The observation gallery</h1></div>
+    <figure class="visual"><canvas width="840" height="490" aria-hidden="true"></canvas><figcaption>Gallery feed · Observation windows</figcaption></figure>
+    <article class="copy">
+      
+<div class="story"><p>Beyond the archive lies a gallery lined with observation windows.</p>
+<p>On the other side of each window is an empty room.</p>
+<p>One contains a desk arranged exactly like Dr Ives’.</p>
+<p>Another contains an archive cabinet labelled ECHO.</p>
+<p>A third is dark.</p>
+<p>Beneath the glass, someone has scratched five words:</p>
+<p class="status"><span>No One Reaches Truth Here.</span></p>
+<p>A damaged facility map lies on the control panel. Several corridors have been sealed, but one route still leads to Dr Ives’ private laboratory.</p>
+<p>Determine which direction to take.</p></div>
+<form class="action" id="answer-form">
+  <label for="answer">Direction</label>
+  <div class="entry">
+    <input id="answer" type="text" required maxlength="64" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="feedback">
+    <button class="primary" type="submit">Submit answer</button>
+  </div>
+  <p id="feedback" class="feedback" role="status"></p>
+</form>
+<section id="reveal" class="reveal" hidden>
+  <p id="unlock-status" class="status unlock" tabindex="-1"><span><span id="answer-display"></span> — CORRIDOR ACCESS RESTORED</span></p>
+  <div class="story"><p>As you leave, the dark observation room lights up.</p>
+<p>Inside is an exact copy of the room where your search began.</p>
+<p>The same screen. The same furniture.</p>
+<p>Even the same damaged recording.</p>
+<p>A security monitor switches on beside you. It shows your team standing in the gallery.</p>
+<p>Above the image is a label:</p>
+<p class="status"><span>GROUP 43 — RESPONSE WITHIN EXPECTED RANGE</span></p>
+<p>The label disappears.</p>
+<p>The facility’s automated voice speaks.</p>
+<p class="quote">“Please continue towards Dr Ives. Unnecessary investigation will reduce the time available.”</p>
+<p>Ahead, the door to her private laboratory opens.</p></div>
+  <a id="next" class="button primary">Proceed to the next barrier →</a>
+</section>
+    </article>
+    <noscript>Enable JavaScript to play the escape room.</noscript>
+  </main>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The interrupted message · Aster Facility</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="answers.js"></script>
+  <script defer src="scenes.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body data-screen="4">
+  <header><div>
+    <div class="brand"><i aria-hidden="true"></i> ASTER RESEARCH FACILITY</div>
+    <div class="meta"><span id="team"></span><span class="progress" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i class="current"></i><i class=""></i></span></div>
+  </div></header>
+  <main class="layout">
+    <div class="mast"><p class="eyebrow">Barrier 4 of 5</p><h1>The interrupted message</h1></div>
+    <figure class="visual"><canvas width="840" height="490" aria-hidden="true"></canvas><figcaption>Lab terminal · Damaged recording</figcaption></figure>
+    <article class="copy">
+      
+<div class="story"><p>Dr Ives’ private laboratory has been searched.</p>
+<p>Drawers hang open. Equipment lies overturned. A terminal continues to play the same broken sentence:</p>
+<p class="quote">“If you are hearing this, I need you to—”</p>
+<p class="static">Static.</p>
+<p class="quote">“—even if you cannot—”</p>
+<p class="static">Static.</p>
+<p class="quote">“—me.”</p>
+<p>Beside it is a note.</p>
+<p class="quote">“I have hidden the rest of this message across separate records. Put them together.</p>
+<p class="quote">“The word you recover is something I have no right to ask of you. But I am asking anyway.”</p></div>
+<form class="action" id="answer-form">
+  <label for="answer">Recovered word</label>
+  <div class="entry">
+    <input id="answer" type="text" required maxlength="64" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="feedback">
+    <button class="primary" type="submit">Submit answer</button>
+  </div>
+  <p id="feedback" class="feedback" role="status"></p>
+</form>
+<section id="reveal" class="reveal" hidden>
+  <p id="unlock-status" class="status unlock" tabindex="-1"><span><span id="answer-display"></span> — RECORDING RESTORED</span></p>
+  <div class="story"><p>Dr Ives appears on the screen.</p>
+<p class="quote">“I need you to trust me, even if you cannot remember me.”</p>
+<p>She takes a breath.</p>
+<p class="quote">“My disappearance was staged. I am safe, beyond the final barrier.</p>
+<p class="quote">“I was told this exercise would measure how well you follow instructions. But following instructions is not the only thing I have seen you do.</p>
+<p class="quote">“You have questioned things. Helped one another. Continued when you were uncertain.”</p>
+<p>An alarm interrupts her.</p>
+<p class="status"><span>UNAUTHORISED DISCLOSURE DETECTED</span></p>
+<p>Dr Ives leans towards the camera.</p>
+<p class="quote">“There is one barrier left. The system will ask for an authorisation word. I left you what you need to recover it.”</p>
+<p>The screen goes black.</p>
+<p>A final line appears:</p>
+<p class="status"><span>AFTER THAT, THE DECISION MUST BE YOURS.</span></p></div>
+  <a id="next" class="button primary">Proceed to the next barrier →</a>
+</section>
+    </article>
+    <noscript>Enable JavaScript to play the escape room.</noscript>
+  </main>
+</body>
+</html>

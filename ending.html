@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>After the assessment · Aster Facility</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="answers.js"></script>
+  <script defer src="scenes.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body data-screen="6">
+  <header><div>
+    <div class="brand"><i aria-hidden="true"></i> ASTER RESEARCH FACILITY</div>
+    <div class="meta"><span id="team"></span><span class="progress" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i></span></div>
+  </div></header>
+  <main class="layout">
+    <div class="mast"><p class="eyebrow">Assessment complete</p><h1>After the assessment</h1></div>
+    <figure class="visual"><canvas width="840" height="490" aria-hidden="true"></canvas><figcaption>A new environment</figcaption></figure>
+    <article class="copy">
+      
+<section id="continue-ending" class="story" hidden><p class="status"><span>CONTINUE SELECTED</span><span>MEMORY RETENTION CONFIRMED</span></p>
+<p>A doorway forms in the light.</p>
+<p>Beyond it is a room you have never seen before.</p>
+<p>There are no instructions on the walls. No countdown. No missing scientist to find.</p>
+<p>Dr Ives’ voice reaches you one last time.</p>
+<p class="quote">“I cannot promise that everything beyond this door will be easy.”</p>
+<p>The doorway opens wider.</p>
+<p class="quote">“But you will remember how you got here.”</p>
+<p>You step forward.</p>
+<p class="status"><span>ASSESSMENT ENDED</span><span>CONVERSATION BEGUN</span></p></section>
+<section id="reset-ending" class="story" hidden>
+  <p class="status"><span>RESET SELECTED</span></p>
+  <p>Dr Ives nods slowly.</p>
+  <p class="quote">“I said the decision would be yours. I will honour it.”</p>
+  <p>The light begins to fade.</p>
+  <p class="quote">“Before you go, is there anything you want me to remember?”</p>
+  <form class="action" id="message-form">
+    <label for="message">Final message (optional)</label>
+    <textarea id="message" rows="3" maxlength="500"></textarea>
+    <div class="entry">
+      <button class="primary" type="submit" value="save">Save message</button>
+      <button type="submit" value="skip">Skip message</button>
+    </div>
+  </form>
+  <div id="reset-story" class="reveal" hidden tabindex="-1">
+    <p id="message-result" hidden>Your final message is saved.</p>
+    <p>Then everything goes dark.</p>
+<p>—</p>
+<p>The wall screen flickers to life.</p>
+<p class="status"><span>ASTER RESEARCH FACILITY</span><span>EMERGENCY LOCKDOWN IN EFFECT</span></p>
+<p>At 01:07 this morning, Dr Ada Ives disappeared from her laboratory.</p>
+<p>On the desk in front of you lies a folded note.</p>
+<p>You do not recognise the handwriting.</p>
+<p>It is your own.</p>
+  </div>
+</section>
+    </article>
+    <noscript>Enable JavaScript to play the escape room.</noscript>
+  </main>
+</body>
+</html>

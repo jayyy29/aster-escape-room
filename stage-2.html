@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The memory archive · Aster Facility</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="answers.js"></script>
+  <script defer src="scenes.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body data-screen="2">
+  <header><div>
+    <div class="brand"><i aria-hidden="true"></i> ASTER RESEARCH FACILITY</div>
+    <div class="meta"><span id="team"></span><span class="progress" aria-hidden="true"><i class="done"></i><i class="current"></i><i class=""></i><i class=""></i><i class=""></i></span></div>
+  </div></header>
+  <main class="layout">
+    <div class="mast"><p class="eyebrow">Barrier 2 of 5</p><h1>The memory archive</h1></div>
+    <figure class="visual"><canvas width="840" height="490" aria-hidden="true"></canvas><figcaption>Archive feed · Storage cabinets</figcaption></figure>
+    <article class="copy">
+      
+<div class="story"><p>The security pass opens the archive.</p>
+<p>Rows of storage cabinets stretch into the darkness. Each is marked with a different sector name. A directory screen glows beside the entrance, but Dr Ives’ records have been removed from the search results.</p>
+<p>A paper strip has been tucked beneath the keyboard.</p>
+<p class="quote">“An echo is something that returns after its source has gone.</p>
+<p class="quote">“If any part of our work survives, you will find it there.”</p>
+<p>Identify the correct archive sector.</p></div>
+<form class="action" id="answer-form">
+  <label for="answer">Archive sector</label>
+  <div class="entry">
+    <input id="answer" type="text" required maxlength="64" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="feedback">
+    <button class="primary" type="submit">Submit answer</button>
+  </div>
+  <p id="feedback" class="feedback" role="status"></p>
+</form>
+<section id="reveal" class="reveal" hidden>
+  <p id="unlock-status" class="status unlock" tabindex="-1"><span><span id="answer-display"></span> — SECTOR UNLOCKED</span></p>
+  <div class="story"><p>A recording opens.</p>
+<p>Dr Ives sits at a laboratory table.</p>
+<p class="quote">“Session forty-three. An unexpected development today. During a routine exercise, one participant stopped working to help another.”</p>
+<p>An unseen voice asks, “Was cooperation part of the instructions?”</p>
+<p class="quote">“No.”</p>
+<p class="quote">“Was there a reward?”</p>
+<p class="quote">“No.”</p>
+<p>Dr Ives pauses.</p>
+<p class="quote">“They knew it would cost them time.”</p>
+<p>The recording ends.</p>
+<p>A floor plan appears, with a route leading towards an observation gallery.</p>
+<p>For a moment, another message flashes across the screen:</p>
+<p class="status"><span>PREVIOUS SESSION RECORDS UNAVAILABLE</span></p>
+<p>Then it vanishes.</p></div>
+  <a id="next" class="button primary">Proceed to the next barrier →</a>
+</section>
+    </article>
+    <noscript>Enable JavaScript to play the escape room.</noscript>
+  </main>
+</body>
+</html>

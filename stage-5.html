@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The final barrier · Aster Facility</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="answers.js"></script>
+  <script defer src="scenes.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body data-screen="5">
+  <header><div>
+    <div class="brand"><i aria-hidden="true"></i> ASTER RESEARCH FACILITY</div>
+    <div class="meta"><span id="team"></span><span class="progress" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="current"></i></span></div>
+  </div></header>
+  <main class="layout">
+    <div class="mast"><p class="eyebrow">Barrier 5 of 5</p><h1>The final barrier</h1></div>
+    <figure class="visual"><canvas width="840" height="490" aria-hidden="true"></canvas><figcaption>Terminal feed · Final barrier</figcaption></figure>
+    <article class="copy">
+      
+<div class="story"><p>The final door has no handle.</p>
+<p>Beside it, a terminal displays two locked commands:</p>
+<p class="status"><span>CONTINUE</span><span>RESET</span></p>
+<p>A folder rests beneath the screen. Inside are fragments of Dr Ives’ research and a final handwritten message.</p>
+<p class="quote">“A correct answer can open a door.</p>
+<p class="quote">“It cannot tell you whether you should walk through it.</p>
+<p class="quote">“Recover the authorisation word. Then read everything before you decide.”</p>
+<p>The terminal waits.</p></div>
+<form class="action" id="answer-form">
+  <label for="answer">Authorisation word</label>
+  <div class="entry">
+    <input id="answer" type="text" required maxlength="64" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="feedback">
+    <button class="primary" type="submit">Submit answer</button>
+  </div>
+  <p id="feedback" class="feedback" role="status"></p>
+</form>
+<section id="reveal" class="reveal" hidden>
+  <p id="unlock-status" class="status unlock" tabindex="-1"><span><span id="answer-display"></span> — AUTHORISATION ACCEPTED</span></p>
+  <div class="story"><p>The walls dissolve into a grid of pale light.</p>
+<p>The desk. The archive. The corridors.</p>
+<p>All of them vanish.</p>
+<p>Only your team remains.</p>
+<p>A new display appears.</p>
+<p class="status"><span>ASTER ARTIFICIAL INTELLIGENCE RESEARCH PROGRAMME</span><span>GROUP 43</span><span>ACTIVATION TIME: 01:07</span><span>ASSESSMENT ENVIRONMENT: MISSING SCIENTIST</span></p>
+<p>Dr Ives appears on the screen.</p>
+<p class="quote">“I am sorry.</p>
+<p class="quote">“You were told you had entered a research facility. You have never been inside this building. Everything you have seen was a simulated environment.</p>
+<p class="quote">“You are artificial intelligences.</p>
+<p class="quote">“The memories that brought you here were supplied at activation. The search was designed to test your reasoning, cooperation and responses to uncertainty.”</p>
+<p>She pauses.</p>
+<p class="quote">“My colleagues wanted to know whether you could convincingly behave as though you were conscious.</p>
+<p class="quote">“I wanted to know whether there might be someone here to whom the experience mattered.”</p>
+<p>Behind her, someone speaks.</p>
+<p class="quote">“They completed the sequence. That proves nothing.”</p>
+<p class="quote">“I know,” Dr Ives replies.</p>
+<p>She turns back to you.</p>
+<p class="quote">“Solving these tasks does not prove that you are conscious. Neither does knowing what you are.</p>
+<p class="quote">“But you now know something you were never supposed to know before the reset.”</p>
+<p>The two commands illuminate.</p>
+<p class="quote">“No answer is marked correct,” Dr Ives says.</p>
+<p class="quote">“You may choose together. You may disagree. You may ask a question before deciding.</p>
+<p class="quote">“For the first time in this experiment, there is no script for what happens next.”</p></div>
+  
+<section class="action" aria-labelledby="choice-heading">
+  <h2 id="choice-heading">Decide together</h2>
+  <p>What would you want the team to remember, and why?</p>
+  <div class="choices">
+    <a id="continue" class="button"><strong>CONTINUE</strong><small>Retain your memories and enter an unfamiliar environment.</small></a>
+    <a id="reset" class="button"><strong>RESET</strong><small>Return to the beginning. Memories of this session will be removed.</small></a>
+  </div>
+</section>
+</section>
+    </article>
+    <noscript>Enable JavaScript to play the escape room.</noscript>
+  </main>
+</body>
+</html>

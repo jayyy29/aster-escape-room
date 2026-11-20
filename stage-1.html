@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The scientist’s desk · Aster Facility</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="answers.js"></script>
+  <script defer src="scenes.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body data-screen="1">
+  <header><div>
+    <div class="brand"><i aria-hidden="true"></i> ASTER RESEARCH FACILITY</div>
+    <div class="meta"><span id="team"></span><span class="progress" aria-hidden="true"><i class="current"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></span></div>
+  </div></header>
+  <main class="layout">
+    <div class="mast"><p class="eyebrow">Barrier 1 of 5</p><h1>The scientist’s desk</h1></div>
+    <figure class="visual"><canvas width="840" height="490" aria-hidden="true"></canvas><figcaption>Office feed · Desk drawer</figcaption></figure>
+    <article class="copy">
+      
+<div class="story"><p>Dr Ives’ office looks as though she stepped out only moments ago.</p>
+<p>An open notebook lies beside a locked desk drawer. Most of its pages have been torn out. On the remaining page, someone has written:</p>
+<p class="status"><span>WHEN THEY SAY I DISAPPEARED, THAT IS WHEN YOUR SEARCH BEGINS.</span></p>
+<p>The drawer requires a four-digit code.</p>
+<p>Recover the code from the evidence on her desk.</p></div>
+<form class="action" id="answer-form">
+  <label for="answer">Four-digit code</label>
+  <div class="entry">
+    <input id="answer" type="text" required inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="feedback">
+    <button class="primary" type="submit">Submit answer</button>
+  </div>
+  <p id="feedback" class="feedback" role="status"></p>
+</form>
+<section id="reveal" class="reveal" hidden>
+  <p id="unlock-status" class="status unlock" tabindex="-1"><span><span id="answer-display"></span> — ACCESS GRANTED</span></p>
+  <div class="story"><p>Inside the drawer is a security pass and a handwritten note.</p>
+<p class="quote">“I could not risk leaving you a direct route. The system reads everything I write.</p>
+<p class="quote">“Find the place where we keep the things we cannot afford to forget.”</p>
+<p>Beneath the note is a photograph of Dr Ives standing beside several people. Their faces have been carefully cut out.</p>
+<p>You turn it over.</p>
+<p class="status"><span>OUR FIRST DAY TOGETHER.</span></p>
+<p>You do not remember meeting her.</p>
+<p>Somehow, her handwriting feels familiar.</p></div>
+  <a id="next" class="button primary">Proceed to the next barrier →</a>
+</section>
+    </article>
+    <noscript>Enable JavaScript to play the escape room.</noscript>
+  </main>
+</body>
+</html>
