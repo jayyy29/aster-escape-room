@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The interrupted message · Aster Facility</title>
   <link rel="stylesheet" href="style.css">
+  <script defer src="routes.js"></script>
   <script defer src="answers.js"></script>
   <script defer src="scenes.js"></script>
   <script defer src="game.js"></script>
@@ -14,8 +15,15 @@
     <div class="brand"><i aria-hidden="true"></i> ASTER RESEARCH FACILITY</div>
     <div class="meta"><span id="team"></span><span class="progress" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i class="current"></i><i class=""></i></span></div>
   </div></header>
-  <main class="layout">
-    <div class="mast"><p class="eyebrow">Barrier 4 of 5</p><h1>The interrupted message</h1></div>
+  <main id="gate" hidden>
+    <section class="action" aria-labelledby="gate-title">
+      <h2 id="gate-title"></h2>
+      <p id="gate-detail"></p>
+      <a id="gate-link" class="button primary" hidden></a>
+    </section>
+  </main>
+  <main class="layout" id="mission-content" hidden>
+    <div class="mast"><a id="back" class="button back" hidden>← Back</a><p class="eyebrow">Barrier 4 of 5</p><h1>The interrupted message</h1></div>
     <figure class="visual"><canvas width="840" height="490" aria-hidden="true"></canvas><figcaption>Lab terminal · Damaged recording</figcaption></figure>
     <article class="copy">
       
@@ -52,10 +60,10 @@
 <p>The screen goes black.</p>
 <p>A final line appears:</p>
 <p class="status"><span>AFTER THAT, THE DECISION MUST BE YOURS.</span></p></div>
-  <a id="next" class="button primary">Proceed to the next barrier →</a>
+  <a id="next" class="button primary">Proceed to the next barrier →</a><p id="scan-next" class="action">Scan the QR code at the next station when your team is ready.</p>
 </section>
     </article>
-    <noscript>Enable JavaScript to play the escape room.</noscript>
   </main>
+  <noscript><main>Enable JavaScript to play the escape room.</main></noscript>
 </body>
 </html>

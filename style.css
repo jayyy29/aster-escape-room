@@ -77,3 +77,6 @@ button:hover, .button:hover { background: #382c63; border-color: var(--violet); 
 }
 @media (max-width: 380px) { .choices { grid-template-columns: 1fr; } .meta { gap: 8px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; } }
+.back { margin-bottom: 18px; }
+#resume { margin-bottom: 12px; }
+#restart-note { margin-bottom: 12px; }

@@ -1,37 +1,118 @@
 "use strict";
-const screenNumber = Number(document.body.dataset.screen);
-const params = new URLSearchParams(location.search);
-const team = params.get("team") || "";
-const run = params.get("run") || "";
-const validRun = /^[1-6]$/.test(team) && /^[a-z0-9-]{8,60}$/.test(run);
-const storageKey = "aster:" + team + ":" + run;
-const get = (id) => document.getElementById(id);
-const progress = () => Number(sessionStorage.getItem(storageKey) || 0);
-const page = (filename, choice) => {
-  const query = new URLSearchParams({ team, run });
-  if (choice) query.set("choice", choice);
-  return filename + "?" + query;
-};
 
-function unlock(answer, focus) {
+const screen = Number(document.body.dataset.screen);
+const get = (id) => document.getElementById(id);
+const pages = ["intro", "stage1", "stage2", "stage3", "stage4", "stage5", "ending"];
+const hostedFiles = ["index.html", ...pages.slice(1, 6).map((_, i) => "stage-" + (i + 1) + ".html"), "ending.html"];
+const siteUrls = pages.map((name) => window.ASTER_GOOGLE_SITES[name]);
+const googleMode = siteUrls.every((url) => /^https:\/\//i.test(url));
+const storageKey = "aster-mission-v2:" + new URL(".", location.href).pathname;
+
+function readMission() {
+  const raw = localStorage.getItem(storageKey);
+  if (!raw) return null;
+  let saved;
+  try {
+    saved = JSON.parse(raw);
+  } catch {
+    return null;
+  }
+  if (!saved || !Number.isInteger(saved.team) || saved.team < 1 || saved.team > 6 ||
+      !Number.isInteger(saved.cleared) || saved.cleared < 0 || saved.cleared > 5) return null;
+  return saved;
+}
+
+function setLink(link, number) {
+  link.href = googleMode ? siteUrls[number] : hostedFiles[number];
+  if (googleMode) link.target = "_top";
+}
+
+function connect(id, number) {
+  setLink(get(id), number);
+}
+
+function showGate(title, explanation, destination, label) {
+  const gate = get("gate");
+  get("mission-content").hidden = true;
+  get("gate-title").textContent = title;
+  get("gate-detail").textContent = explanation;
+  if (destination !== null) {
+    connect("gate-link", destination);
+    get("gate-link").textContent = label;
+    get("gate-link").hidden = false;
+  }
+  gate.hidden = false;
+}
+
+function saveMission(saved) {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(saved));
+    return true;
+  } catch {
+    showGate("Progress could not be saved", "Allow this browser to save site data, then reopen the introduction.", 0, "Go to introduction");
+    return false;
+  }
+}
+
+function startIntro(mission) {
+  if (mission) {
+    const resumeScreen = mission.choice ? 6 : Math.min(mission.cleared + 1, 5);
+    connect("resume", resumeScreen);
+    get("resume").textContent = "Resume Team " + mission.team;
+    get("resume").hidden = false;
+    get("restart-note").hidden = false;
+  }
+  for (const link of document.querySelectorAll("[data-team]")) {
+    setLink(link, 1);
+    link.addEventListener("click", (event) => {
+      const team = Number(link.dataset.team);
+      const active = readMission();
+      if (active && !window.confirm("Start a new mission for Team " + team + "? This replaces Team " + active.team + "’s saved progress on this browser.")) {
+        event.preventDefault();
+        return;
+      }
+      if (!saveMission({ team, cleared: 0 })) event.preventDefault();
+    });
+  }
+}
+
+function unlock(expected, focus) {
   get("answer-form").hidden = true;
-  get("answer-display").textContent = answer;
+  get("answer-display").textContent = expected;
   get("reveal").hidden = false;
   document.body.dataset.unlocked = "true";
-  window.drawScene(screenNumber, true);
+  window.drawScene(screen, true);
   if (focus) get("unlock-status").focus();
 }
 
-function startStage() {
-  const expected = window.ASTER_ANSWERS[team][screenNumber - 1];
-  if (screenNumber < 5) get("next").href = page("stage-" + (screenNumber + 1) + ".html");
-  else {
-    get("continue").href = page("ending.html", "continue");
-    get("reset").href = page("ending.html", "reset");
+function startStage(mission) {
+  const expected = window.ASTER_ANSWERS[mission.team][screen - 1];
+  if (screen < 5) {
+    connect("next", screen + 1);
+    get("next").hidden = googleMode;
+    get("scan-next").hidden = !googleMode;
+  } else {
+    for (const choice of ["continue", "reset"]) {
+      connect(choice, 6);
+      get(choice).addEventListener("click", (event) => {
+        const active = readMission();
+        if (!active || active.team !== mission.team || active.cleared < 5) {
+          event.preventDefault();
+          location.reload();
+          return;
+        }
+        if (!saveMission({ team: active.team, cleared: active.cleared, choice })) event.preventDefault();
+      });
+    }
   }
-  if (progress() >= screenNumber) unlock(expected, false);
+  if (mission.cleared >= screen) unlock(expected, false);
   get("answer-form").addEventListener("submit", (event) => {
     event.preventDefault();
+    const active = readMission();
+    if (!active || active.team !== mission.team || active.cleared < screen - 1) {
+      location.reload();
+      return;
+    }
     const input = get("answer");
     if (input.value.trim().toUpperCase() !== expected.trim().toUpperCase()) {
       input.setAttribute("aria-invalid", "true");
@@ -40,8 +121,7 @@ function startStage() {
       input.select();
       return;
     }
-    sessionStorage.setItem(storageKey, String(Math.max(progress(), screenNumber)));
-    unlock(expected, true);
+    if (saveMission({ ...active, cleared: Math.max(active.cleared, screen) })) unlock(expected, true);
   });
   get("answer").addEventListener("input", () => {
     get("answer").removeAttribute("aria-invalid");
@@ -49,46 +129,63 @@ function startStage() {
   });
 }
 
-function startEnding(choice) {
-  get(choice + "-ending").hidden = false;
-  if (choice === "continue") return;
-  const messageKey = storageKey + ":message";
+function startEnding(mission) {
+  get(mission.choice + "-ending").hidden = false;
+  if (mission.choice === "continue") return;
   const showReset = (saved) => {
     get("message-form").hidden = true;
     get("message-result").hidden = !saved;
     get("reset-story").hidden = false;
   };
-  const previous = sessionStorage.getItem(messageKey);
-  if (previous !== null) showReset(Boolean(previous));
+  if (typeof mission.message === "string") showReset(Boolean(mission.message));
   get("message-form").addEventListener("submit", (event) => {
     event.preventDefault();
+    const active = readMission();
+    if (!active || active.team !== mission.team || active.choice !== "reset") {
+      location.reload();
+      return;
+    }
     const message = event.submitter?.value === "skip" ? "" : get("message").value.trim();
-    sessionStorage.setItem(messageKey, message);
-    showReset(Boolean(message));
-    get("reset-story").focus();
+    if (saveMission({ ...active, message })) {
+      showReset(Boolean(message));
+      get("reset-story").focus();
+    }
   });
 }
 
 function init() {
-  const choice = params.get("choice");
-  window.drawScene(screenNumber, false, choice);
-  if (screenNumber === 0) {
-    for (const button of document.querySelectorAll("[data-team]")) {
-      button.addEventListener("click", () => {
-        const runId = Date.now().toString(36) + "-" + Math.random().toString(36).slice(2);
-        const query = new URLSearchParams({ team: button.dataset.team, run: runId });
-        location.href = "stage-1.html?" + query;
-      });
-    }
+  let mission;
+  try {
+    mission = readMission();
+  } catch {
+    showGate("Browser storage is unavailable", "Allow this browser to save site data, then reload this page.", null);
     return;
   }
-  if (!validRun || progress() < screenNumber - 1 ||
-      (screenNumber === 6 && !["continue", "reset"].includes(choice))) {
-    location.replace("index.html");
+  if (screen > 0 && !mission) {
+    showGate("No mission found on this device", "Open the introduction to select your team and start the mission.", 0, "Go to introduction");
     return;
   }
-  get("team").textContent = "Team " + team;
-  if (screenNumber === 6) startEnding(choice);
-  else startStage();
+  if (screen > 0 && (mission.cleared < screen - 1 ||
+      (screen === 6 && !["continue", "reset"].includes(mission.choice)))) {
+    const previous = Math.min(mission.cleared + 1, 5);
+    const title = screen === 6 ? "Ending locked" : "Stage " + screen + " locked";
+    showGate(title, "Complete the earlier part of your mission to unlock this page.", previous, "Resume at Stage " + previous);
+    return;
+  }
+  window.drawScene(screen, false, mission?.choice);
+  if (screen === 0) startIntro(mission);
+  else {
+    get("team").textContent = "Team " + mission.team;
+    connect("back", screen - 1);
+    get("back").hidden = false;
+    if (screen === 6) startEnding(mission);
+    else startStage(mission);
+  }
+  get("mission-content").hidden = false;
 }
+
 init();
+// Recheck when a browser restores a previously visited screen from its cache.
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) location.reload();
+});

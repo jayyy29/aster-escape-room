@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The final barrier · Aster Facility</title>
   <link rel="stylesheet" href="style.css">
+  <script defer src="routes.js"></script>
   <script defer src="answers.js"></script>
   <script defer src="scenes.js"></script>
   <script defer src="game.js"></script>
@@ -14,8 +15,15 @@
     <div class="brand"><i aria-hidden="true"></i> ASTER RESEARCH FACILITY</div>
     <div class="meta"><span id="team"></span><span class="progress" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="current"></i></span></div>
   </div></header>
-  <main class="layout">
-    <div class="mast"><p class="eyebrow">Barrier 5 of 5</p><h1>The final barrier</h1></div>
+  <main id="gate" hidden>
+    <section class="action" aria-labelledby="gate-title">
+      <h2 id="gate-title"></h2>
+      <p id="gate-detail"></p>
+      <a id="gate-link" class="button primary" hidden></a>
+    </section>
+  </main>
+  <main class="layout" id="mission-content" hidden>
+    <div class="mast"><a id="back" class="button back" hidden>← Back</a><p class="eyebrow">Barrier 5 of 5</p><h1>The final barrier</h1></div>
     <figure class="visual"><canvas width="840" height="490" aria-hidden="true"></canvas><figcaption>Terminal feed · Final barrier</figcaption></figure>
     <article class="copy">
       
@@ -72,7 +80,7 @@
 </section>
 </section>
     </article>
-    <noscript>Enable JavaScript to play the escape room.</noscript>
   </main>
+  <noscript><main>Enable JavaScript to play the escape room.</main></noscript>
 </body>
 </html>
