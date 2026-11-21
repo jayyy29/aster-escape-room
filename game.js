@@ -141,7 +141,7 @@ function startStage(mission) {
           location.reload();
           return;
         }
-        if (!saveMission({ team: active.team, cleared: active.cleared, lastStage: screen, choice })) event.preventDefault();
+        if (!saveMission({ team: active.team, cleared: active.cleared, lastStage: resumeStage(active), choice })) event.preventDefault();
       });
     }
   }
@@ -215,7 +215,9 @@ function init() {
   window.drawScene(screen, false, mission?.choice);
   if (screen === 0) startIntro(mission);
   else {
-    if (mission.lastStage !== screen && !saveMission({ ...mission, lastStage: screen })) return;
+    // Revisiting an earlier stage must preserve the team's resume point.
+    const lastStage = Math.max(resumeStage(mission), screen);
+    if (mission.lastStage !== lastStage && !saveMission({ ...mission, lastStage })) return;
     get("team").textContent = "Team " + mission.team;
     connect("back", screen - 1);
     get("back").hidden = false;
