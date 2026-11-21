@@ -22,11 +22,19 @@ function readMission() {
   return saved;
 }
 
+function resumeStage(mission) {
+  const latestAllowed = mission.choice ? 6 : Math.min(mission.cleared + 1, 5);
+  if (Number.isInteger(mission.lastStage) && mission.lastStage >= 1 &&
+      mission.lastStage <= latestAllowed) return mission.lastStage;
+  // Older saves record completed stages only.
+  return mission.choice ? 6 : Math.max(1, mission.cleared);
+}
+
 function setLink(link, number) {
-  // The Google Sites sandbox permits navigation within this frame.
-  // Station QR codes independently open the published Google Sites pages.
-  link.href = hostedFiles[number];
-  link.target = "_self";
+  link.href = googleMode ? siteUrls[number] : hostedFiles[number];
+  // Google Sites allows new tabs from its embed but blocks top-frame navigation.
+  link.target = googleMode && window.self !== window.top ? "_blank" : "_self";
+  link.rel = "noopener";
 }
 
 function connect(id, number) {
@@ -57,38 +65,48 @@ function saveMission(saved) {
 }
 
 function startIntro(mission) {
-  if (mission) {
-    const resumeScreen = mission.choice ? 6 : Math.min(mission.cleared + 1, 5);
-    connect("resume", resumeScreen);
-    get("resume").textContent = "Resume Team " + mission.team;
-    get("resume").hidden = false;
-    get("restart-note").hidden = false;
+  function updateResume(active) {
+    get("resume").hidden = !active;
+    get("restart-note").hidden = !active;
+    if (active) {
+      connect("resume", resumeStage(active));
+      get("resume").textContent = "Resume Team " + active.team;
+    }
   }
+  updateResume(mission);
+  window.addEventListener("storage", (event) => {
+    if (event.key === storageKey || event.key === null) updateResume(readMission());
+  });
+
   const confirmation = get("restart-dialog");
+  const confirmLink = get("restart-confirm");
+  setLink(confirmLink, 1);
   let pendingTeam;
-  function launch(team, destination) {
-    if (saveMission({ team, cleared: 0 })) location.assign(destination);
+  function saveNewMission(team) {
+    const active = { team, cleared: 0 };
+    if (!saveMission(active)) return false;
+    updateResume(active);
+    return true;
   }
   for (const link of document.querySelectorAll("[data-team]")) {
     setLink(link, 1);
     link.addEventListener("click", (event) => {
-      event.preventDefault();
       const team = Number(link.dataset.team);
       const active = readMission();
       if (active) {
-        pendingTeam = { team, destination: link.href };
+        event.preventDefault();
+        pendingTeam = team;
         get("restart-question").textContent =
           "Start over with Team " + team + "? This replaces Team " + active.team + "’s saved progress in this browser.";
         confirmation.showModal();
         return;
       }
-      launch(team, link.href);
+      if (!saveNewMission(team)) event.preventDefault();
     });
   }
-  get("restart-confirm").addEventListener("click", () => {
-    const { team, destination } = pendingTeam;
+  confirmLink.addEventListener("click", (event) => {
     confirmation.close();
-    launch(team, destination);
+    if (!saveNewMission(pendingTeam)) event.preventDefault();
   });
 }
 
@@ -117,7 +135,7 @@ function startStage(mission) {
           location.reload();
           return;
         }
-        if (!saveMission({ team: active.team, cleared: active.cleared, choice })) event.preventDefault();
+        if (!saveMission({ team: active.team, cleared: active.cleared, lastStage: screen, choice })) event.preventDefault();
       });
     }
   }
@@ -183,7 +201,7 @@ function init() {
   }
   if (screen > 0 && (mission.cleared < screen - 1 ||
       (screen === 6 && !["continue", "reset"].includes(mission.choice)))) {
-    const previous = Math.min(mission.cleared + 1, 5);
+    const previous = Math.min(resumeStage(mission), 5);
     const title = screen === 6 ? "Ending locked" : "Stage " + screen + " locked";
     showGate(title, "Complete the earlier part of your mission to unlock this page.", previous, "Resume at Stage " + previous);
     return;
@@ -191,6 +209,7 @@ function init() {
   window.drawScene(screen, false, mission?.choice);
   if (screen === 0) startIntro(mission);
   else {
+    if (mission.lastStage !== screen && !saveMission({ ...mission, lastStage: screen })) return;
     get("team").textContent = "Team " + mission.team;
     connect("back", screen - 1);
     get("back").hidden = false;
