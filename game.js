@@ -23,10 +23,10 @@ function readMission() {
 }
 
 function setLink(link, number) {
-  // Inside Google Sites, stay in the embed. Its sandbox can block parent
-  // navigation and browser dialogs. QR scans still open Google Sites pages.
-  const embedded = window.self !== window.top;
-  link.href = googleMode && !embedded ? siteUrls[number] : hostedFiles[number];
+  // The Google Sites sandbox permits navigation within this frame.
+  // Station QR codes independently open the published Google Sites pages.
+  link.href = hostedFiles[number];
+  link.target = "_self";
 }
 
 function connect(id, number) {
