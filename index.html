@@ -44,7 +44,14 @@
 <p class="status"><span>FACILITY RESET PENDING</span><span>FIVE SECURITY BARRIERS REMAIN</span></p>
 <p>Find Dr Ives. Discover what happened. Escape before the reset.</p>
 </div>
-<section class="action" aria-labelledby="team-heading"><h2 id="team-heading">Select your team</h2><a id="resume" class="button primary" hidden></a><p id="restart-note" hidden>Selecting a team below starts a new mission.</p><div class="teams"><a class="button" data-team="1">Team 1</a><a class="button" data-team="2">Team 2</a><a class="button" data-team="3">Team 3</a><a class="button" data-team="4">Team 4</a><a class="button" data-team="5">Team 5</a><a class="button" data-team="6">Team 6</a></div></section>
+<section class="action" aria-labelledby="team-heading"><h2 id="team-heading">Select your team</h2><a id="resume" class="button primary" hidden></a><p id="restart-note" hidden>Selecting a team below starts a new mission.</p><div class="teams"><a class="button" data-team="1">Team 1</a><a class="button" data-team="2">Team 2</a><a class="button" data-team="3">Team 3</a><a class="button" data-team="4">Team 4</a><a class="button" data-team="5">Team 5</a><a class="button" data-team="6">Team 6</a></div>
+<dialog id="restart-dialog" aria-labelledby="restart-question">
+  <p id="restart-question"></p>
+  <form method="dialog" class="entry">
+    <button autofocus>Keep progress</button>
+    <button type="button" id="restart-confirm" class="primary">Start new mission</button>
+  </form>
+</dialog></section>
     </article>
   </main>
   <noscript><main>Enable JavaScript to play the escape room.</main></noscript>

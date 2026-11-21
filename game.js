@@ -4,7 +4,7 @@ const screen = Number(document.body.dataset.screen);
 const get = (id) => document.getElementById(id);
 const pages = ["intro", "stage1", "stage2", "stage3", "stage4", "stage5", "ending"];
 const hostedFiles = ["index.html", ...pages.slice(1, 6).map((_, i) => "stage-" + (i + 1) + ".html"), "ending.html"];
-const siteUrls = pages.map((name) => window.ASTER_GOOGLE_SITES[name]);
+const siteUrls = pages.map((name) => window.ASTER_GOOGLE_SITES?.[name]);
 const googleMode = siteUrls.every((url) => /^https:\/\//i.test(url));
 const storageKey = "aster-mission-v2:" + new URL(".", location.href).pathname;
 
@@ -23,8 +23,10 @@ function readMission() {
 }
 
 function setLink(link, number) {
-  link.href = googleMode ? siteUrls[number] : hostedFiles[number];
-  if (googleMode) link.target = "_top";
+  // Inside Google Sites, stay in the embed. Its sandbox can block parent
+  // navigation and browser dialogs. QR scans still open Google Sites pages.
+  const embedded = window.self !== window.top;
+  link.href = googleMode && !embedded ? siteUrls[number] : hostedFiles[number];
 }
 
 function connect(id, number) {
@@ -62,18 +64,32 @@ function startIntro(mission) {
     get("resume").hidden = false;
     get("restart-note").hidden = false;
   }
+  const confirmation = get("restart-dialog");
+  let pendingTeam;
+  function launch(team, destination) {
+    if (saveMission({ team, cleared: 0 })) location.assign(destination);
+  }
   for (const link of document.querySelectorAll("[data-team]")) {
     setLink(link, 1);
     link.addEventListener("click", (event) => {
+      event.preventDefault();
       const team = Number(link.dataset.team);
       const active = readMission();
-      if (active && !window.confirm("Start a new mission for Team " + team + "? This replaces Team " + active.team + "’s saved progress on this browser.")) {
-        event.preventDefault();
+      if (active) {
+        pendingTeam = { team, destination: link.href };
+        get("restart-question").textContent =
+          "Start over with Team " + team + "? This replaces Team " + active.team + "’s saved progress in this browser.";
+        confirmation.showModal();
         return;
       }
-      if (!saveMission({ team, cleared: 0 })) event.preventDefault();
+      launch(team, link.href);
     });
   }
+  get("restart-confirm").addEventListener("click", () => {
+    const { team, destination } = pendingTeam;
+    confirmation.close();
+    launch(team, destination);
+  });
 }
 
 function unlock(expected, focus) {

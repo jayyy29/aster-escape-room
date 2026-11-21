@@ -80,3 +80,12 @@ button:hover, .button:hover { background: #382c63; border-color: var(--violet); 
 .back { margin-bottom: 18px; }
 #resume { margin-bottom: 12px; }
 #restart-note { margin-bottom: 12px; }
+dialog {
+  max-width: min(29rem, calc(100% - 32px));
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--violet);
+  border-radius: 12px;
+  padding: 20px;
+}
+dialog::backdrop { background: #08091acc; }
