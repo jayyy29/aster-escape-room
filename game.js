@@ -31,10 +31,10 @@ function resumeStage(mission) {
 }
 
 function setLink(link, number) {
-  link.href = googleMode ? siteUrls[number] : hostedFiles[number];
-  // Google Sites allows new tabs from its embed but blocks top-frame navigation.
-  link.target = googleMode && window.self !== window.top ? "_blank" : "_self";
-  link.rel = "noopener";
+  // Google Sites blocks changing the outer page from its embed.
+  const embedded = window.self !== window.top;
+  link.href = googleMode && !embedded ? siteUrls[number] : hostedFiles[number];
+  link.target = "_self";
 }
 
 function connect(id, number) {
@@ -74,6 +74,12 @@ function startIntro(mission) {
     }
   }
   updateResume(mission);
+  get("resume").addEventListener("click", (event) => {
+    // Read again at click time in case this Start page was left open.
+    const active = readMission();
+    updateResume(active);
+    if (!active) event.preventDefault();
+  });
   window.addEventListener("storage", (event) => {
     if (event.key === storageKey || event.key === null) updateResume(readMission());
   });
