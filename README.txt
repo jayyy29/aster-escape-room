@@ -1,4 +1,4 @@
-ASTER RESEARCH FACILITY
+MAXIMUM SECURITY RESEARCH FACILITY
 Google Sites and QR setup
 
 1. Unzip the package. Upload the HTML, CSS, and JavaScript files together
